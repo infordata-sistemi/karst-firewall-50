@@ -18,6 +18,12 @@ The **Karst Firewall 5.0** project is co-funded by the [Interreg VI-A Italy–Sl
 
 **Contact:** Infordata Sistemi Srl Società Benefit · Strada per Vienna 55/1 · 34151 Trieste (TS) · Italy
 
+> **TerraWise project family.** Three repositories, three audiences:
+>
+> - **[`terrawise`](https://github.com/infordata-sistemi/terrawise)** — the product umbrella · architecture · modules · roadmap
+> - **[`karst-firewall-50`](https://github.com/infordata-sistemi/karst-firewall-50)** — the first deployment · EU Interreg public docs &nbsp;← *you are here*
+> - **[`pyrowise`](https://github.com/infordata-sistemi/pyrowise)** — the simulation engine · open scientific docs
+
 ---
 
 ## Quick links
