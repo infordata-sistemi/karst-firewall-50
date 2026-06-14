@@ -87,7 +87,7 @@ The production cockpit at `karst.way.to.it` is organised around the cross-border
 - Streaming and fallback perimeter rendering, **ensemble** rendering (burn-probability surface + p10 / p50 / p90 arrival envelopes), arrival-time layers, realistic view toggle, smoke toggle and GIS-layer panel.
 - Engineering/audit drawer, bookmarks, scenario handoff, share/export controls, QGIS-ready SHP perimeter export and run-bundle evidence for reproducibility.
 
-> *PyroWISE is the simulation engine — a separate commercial product of Infordata Sistemi with [open scientific documentation](https://github.com/infordata-sistemi/pyrowise). Its source code is not in this docs repo or in `kf50-php`.*
+> *PyroWISE is the simulation engine — open source under AGPL-3.0, with a commercial license + SaaS from Infordata Sistemi and [open scientific documentation](https://github.com/infordata-sistemi/pyrowise). Its source lives in its own engine repository, not in this docs repo or in `kf50-php`.*
 
 ### 4. Interventions — dispatch, ETA and staging support
 
@@ -195,7 +195,7 @@ The project also builds on technology and components Infordata had developed pre
 
 | Component | Owner | Relationship to KF5.0 |
 |---|---|---|
-| [**PyroWISE simulation engine**](https://github.com/markopetelin/infordata-kf50-firegrowth) | Infordata Sistemi (commercial product) | The fire-spread simulator the cockpit talks to. KF5.0 funded the **integration** and the Karst-calibrated configuration; the engine itself is a pre-existing commercial product. See its [open scientific docs](https://github.com/infordata-sistemi/pyrowise) for the boundary between open methods and the commercial engine. |
+| [**PyroWISE simulation engine**](https://github.com/markopetelin/infordata-kf50-firegrowth) | Infordata Sistemi (AGPL-3.0 + commercial) | The fire-spread simulator the cockpit talks to. KF5.0 funded the **integration** and the Karst-calibrated configuration; the engine itself is a pre-existing product, open-sourced under **AGPL-3.0** with a commercial license + SaaS. See its [open scientific docs](https://github.com/infordata-sistemi/pyrowise) for the open-core boundary. |
 | MinIO object store | (operational infrastructure) | Self-published GIS catalogue + run-bundle artefacts. |
 
 ### External public services the platform consumes
@@ -248,8 +248,9 @@ This documentation is licensed under [CC BY 4.0](LICENSE) — share and adapt wi
 The platform implementation follows an **open-core** model across the external repositories listed above:
 
 - **Core community platform code** — EUPL-1.2-or-later (open source).
+- **PyroWISE simulation engine** — AGPL-3.0 (open source); commercial license + SaaS available.
 - **Documentation, methodology & datasets** — CC BY 4.0.
-- **Advanced modules + SaaS + the PyroWISE engine** — proprietary, commercial.
+- **Other advanced modules + SaaS** — proprietary, commercial.
 
 See [`infordata-sistemi/pyrowise/OPEN_VS_COMMERCIAL.md`](https://github.com/infordata-sistemi/pyrowise/blob/main/OPEN_VS_COMMERCIAL.md) for the explicit open-vs-commercial boundary on the simulation side.
 
