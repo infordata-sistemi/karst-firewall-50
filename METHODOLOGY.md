@@ -41,6 +41,12 @@ No single sensor catches every wildfire. The platform stitches five complementar
 
 All five funnel into the same dispatch loop: the platform de-duplicates concurrent signals, prioritises by KFWI risk in that cell, and routes a single confirmed alert to the responsible civil-protection team.
 
+## Living fuel state — NDVI into the fire model *(opt-in preview)*
+
+A static fuel map goes stale the moment it is drawn. The platform is adding a **dynamic fuel-state** layer: satellite "greenness" (NDVI from Copernicus / Sentinel-2) is refreshed every few hours, compared against a per-vegetation-class seasonal "normal", and turned into a vegetation-stress signal that feeds the spread simulator — so the same fire runs faster across parched August fuel than green May fuel.
+
+It ships as an **opt-in toggle** on the simulator (off by default, with a manifest badge when active) and is deliberately conservative — bounded, provenance-tagged, and gated behind an A/B validation against the static-fuel baseline before it could become a default. The open scientific description lives in the [PyroWISE docs](https://github.com/infordata-sistemi/pyrowise/blob/main/MODEL.md#dynamic-fuel-state--reading-todays-fuel-from-space-opt-in). This is the "living data" direction of the [TerraWise roadmap](https://github.com/infordata-sistemi/terrawise/blob/main/ROADMAP.md) reaching the operational platform.
+
 ## Hazard & vulnerability mapping
 
 WP1 produces hazard maps (where fires are likely to start and spread) and vulnerability maps (who and what is exposed). Both are cross-border, harmonised across IT and SI legislative frames, and feed back into the operational platform.

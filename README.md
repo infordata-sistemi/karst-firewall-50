@@ -81,9 +81,10 @@ The production cockpit at `karst.way.to.it` is organised around the cross-border
 ![Simulation run screen](assets/kf50-simulation.png)
 
 - **PyroWISE**-backed nowcast, scenario and replay launcher with live/replay weather selection, ignition point, duration, time step and fuel mapping.
-- Barrier policies such as `soft_roads_v1` to slow or block spread across road and infrastructure layers without hard-clipping the fire front.
+- Tiered barrier policies such as `soft_roads_v1` / `soft_with_highways_v1` to slow or block spread across roads, motorways and infrastructure layers without hard-clipping the fire front.
+- Optional **dynamic fuel-state** toggle — feeds the run a satellite-derived (NDVI) vegetation-stress signal so the fire burns *today's* fuel; off by default, with a manifest badge when active (see [METHODOLOGY.md](METHODOLOGY.md)).
 - Run metadata strip for weather source, policy, ignition, duration, wall-clock and simulation type.
-- Streaming and fallback perimeter rendering, arrival-time layers, realistic view toggle, smoke toggle and GIS-layer panel.
+- Streaming and fallback perimeter rendering, **ensemble** rendering (burn-probability surface + p10 / p50 / p90 arrival envelopes), arrival-time layers, realistic view toggle, smoke toggle and GIS-layer panel.
 - Engineering/audit drawer, bookmarks, scenario handoff, share/export controls, QGIS-ready SHP perimeter export and run-bundle evidence for reproducibility.
 
 > *PyroWISE is the simulation engine — a separate commercial product of Infordata Sistemi with [open scientific documentation](https://github.com/infordata-sistemi/pyrowise). Its source code is not in this docs repo or in `kf50-php`.*
@@ -148,7 +149,7 @@ The production cockpit at `karst.way.to.it` is organised around the cross-border
 
 The platform ships a **PyroTwin agentic layer** on top of the operational cockpit: small, scoped AI assistants that read operational data, detect work that deserves attention, and either create operator-reviewable findings or propose tightly controlled actions. They do **not** replace the simulator, do not render the maps, and do not get direct database or storage access. Their purpose is to reduce operational backlog and make expert review faster while keeping the human operator, RBAC and audit trail in charge.
 
-Six capabilities ship in the cockpit ([source in `kf50-php`](https://github.com/infordata-sistemi/kf50-php)):
+Seven capabilities ship in the cockpit ([source in `kf50-php`](https://github.com/infordata-sistemi/kf50-php)):
 
 | Capability | What it does | Cadence |
 |---|---|---|
@@ -158,6 +159,7 @@ Six capabilities ship in the cockpit ([source in `kf50-php`](https://github.com/
 | `janitor` | Nightly housekeeping over `simulation_run` — proposes soft-deletes for orphan / test rows under tight approval gates. | nightly |
 | `maintenance` | Nightly preventive-maintenance proposer over the Field Assets registry — clusters overdue assets by proximity and proposes scheduled events. | nightly |
 | `alert_triage` | Hourly sweep over unresolved alerts older than 4 h — classifies each as `false_positive` / `duplicate` / `low` / `medium` / `high` / `critical`, drafts notifications for operator review. | hourly + webhook |
+| `active_fire` | Active-fire trigger — sweeps NASA FIRMS (MODIS / VIIRS) detections in and near the AOI, clusters new hotspots, and **proposes** a PyroWISE nowcast per cluster for operator review. Propose-only: it never auto-launches a live simulation. | hourly / on FIRMS pass |
 
 Every agent run, finding and proposed action is persisted in audit tables and surfaced in the cockpit's `/agentic/*` admin UI. Live writes need an explicit operator approval (or a matching pre-approved low-risk policy). Master kill-switch + per-capability budget knobs cap the layer well under €200 / month at default settings.
 
